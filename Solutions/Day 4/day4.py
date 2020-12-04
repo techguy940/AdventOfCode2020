@@ -140,34 +140,17 @@ def height(n):
         return False
 
 v = 0
+k = {"byr": birthday, "iyr": issue, "eyr": exp, "ecl": eye, "hcl": hair, "pid": passport, "hgt": height}
 for i in valid:
-    byr, iyr, eyr, hgt, hcl, ecl, pid = 0, 0, 0, 0, 0, 0, 0
+    e = {"byr": 0, "iyr": 0, "eyr": 0, "ecl": 0, "hcl": 0, "pid": 0, "hgt": 0}
     keys = i.split(" ")
     for j in keys:
         key, value = j.split(":")
-        if key == "byr":
-            if birthday(value):
-                byr = 1
-        elif key == "iyr":
-            if issue(value):
-                iyr = 1
-        elif key == "eyr":
-            if exp(value):
-                eyr = 1
-        elif key == "hgt":
-            if height(value):
-                hgt = 1
-        elif key == "hcl":
-            if hair(value):
-                hcl = 1
-        elif key == "ecl":
-            if eye(value):
-                ecl = 1
-        elif key == "pid":
-            if passport(value):
-                pid = 1
+        if key in k:
+            if k[key](value):
+                e[key] = 1
 
-    if all(i for i in [byr, iyr, eyr, hgt, hcl, ecl, pid]):
+    if all(e[i] for i in e):
         v += 1
 
 print(v)
