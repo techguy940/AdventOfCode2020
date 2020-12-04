@@ -48,7 +48,7 @@ with open("data.txt") as f:
   data = f.read().split("\n\n")
 
 to = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
-valid = [i for i in data if all(j in i for j in to)]
+valid = [i.replace("\n", " ") for i in data if all(j in i for j in to)]
 print(len(count))
 
 
@@ -120,5 +120,55 @@ Count the number of valid passports - those that have all required fields and va
 '''
 
 
-# TODO: Update
+birthday = lambda n: int(n) >= 1920 and int(n) <= 2020
+issue = lambda n: int(n) >= 2010 and int(n) <= 2020
+exp = lambda n: int(n) >= 2020 and int(n) <= 2030
+eye = lambda n: n in ("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
+passport = lambda n: len(n) == 9
+hair = lambda n: re.match(r'#([0-9a-f]){6}', value) is not None
+
+def height(n):
+	try:
+		unit = n[-2:]
+		h = int(n[:-2])
+		if unit == "cm":
+			return h >= 150 and h <= 193
+		elif unit == "in":
+			return h >= 59 and h <= 76
+		return False
+	except:
+		return False
+
+v = 0
+for i in valid:
+	byr, iyr, eyr, hgt, hcl, ecl, pid = 0, 0, 0, 0, 0, 0, 0
+	keys = i.split(" ")
+	for j in keys:
+		key, value = j.split(":")
+		if key == "byr":
+			if birthday(value):
+				byr = 1
+		elif key == "iyr":
+			if issue(value):
+				iyr = 1
+		elif key == "eyr":
+			if exp(value):
+				eyr = 1
+		elif key == "hgt":
+			if height(value):
+				hgt = 1
+		elif key == "hcl":
+			if hair(value):
+				hcl = 1
+		elif key == "ecl":
+			if eye(value):
+				ecl = 1
+		elif key == "pid":
+			if passport(value):
+				pid = 1
+
+	if all(i for i in [byr, iyr, eyr, hgt, hcl, ecl, pid]):
+		v += 1
+
+print(v)
 
