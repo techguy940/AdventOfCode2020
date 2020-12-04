@@ -55,7 +55,7 @@ Starting at the top-left corner of your map and following a slope of right 3 and
 with open("data.txt") as f:
   data = f.readlines()
 
-def main(data):
+def main(data, r=3, d=1):
   t = 0
   x = 0
   y = 0
