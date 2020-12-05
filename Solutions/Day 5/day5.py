@@ -39,26 +39,15 @@ As a sanity check, look through your list of boarding passes. What is the highes
 '''
 
 
+t = str.maketrans({'B':'1', 'R':'1', 'F':'0','L':'0'})
+
+def get_seat(p):
+    return int(p.translate(t), 2)
+
 with open("data.txt") as f:
-  data = f.readlines()
+    ids = [get_seat(p.strip()) for p in f.readlines()]
 
-def row(p):
-    s = 0
-    for i, c in enumerate(reversed(p)):
-        if c == 'B':
-            s += 2**i
-    return s
-
-def col(p):
-    s = 0
-    for i, c in enumerate(reversed(boarding_pass)):
-        if c == 'R':
-            s += 2**i
-    return s
-
-_data = [row(p[:7]) * 8 + col(p[7:]) for p in data]))
-print(max(_data))
-
+print(max(ids))
 
 '''
 --- Part Two ---
@@ -72,9 +61,9 @@ What is the ID of your seat?
 '''
 
 
-_ids = sorted(_data)
+ids = sorted(ids)
 
-for a, b in zip(_ids, _ids[1:]):
-    if b - a == 2:
-        print(b - 1)
+for i in range(1, len(ids)):
+    if ids[i] - ids[i-1] == 2:
+        print(ids[i] - 1)
         break
