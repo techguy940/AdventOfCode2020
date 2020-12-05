@@ -41,11 +41,9 @@ As a sanity check, look through your list of boarding passes. What is the highes
 
 t = str.maketrans({'B':'1', 'R':'1', 'F':'0','L':'0'})
 
-def get_seat(p):
-    return int(p.translate(t), 2)
 
 with open("data.txt") as f:
-    ids = [get_seat(p.strip()) for p in f.readlines()]
+    ids = [int(p.strip().translate(t), 2) for p in f.readlines()]
 
 print(max(ids))
 
