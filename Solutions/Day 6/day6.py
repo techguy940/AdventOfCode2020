@@ -41,14 +41,9 @@ For each group, count the number of questions to which anyone answered "yes". Wh
 '''
 
 with open("data.txt") as f:
-    data = list(f.read().split('\n\n'))
+    data = [[set(i) for i in j.splitlines()] for j in f.read().split('\n\n')]
 
-count = 0
-
-for i in data:
-  count += len(set(i.replace('\n','')))
-  
-print(count)
+print(sum([len(i) for i in [set.union(*j) for j in data]]))
 
 
 '''
@@ -86,13 +81,4 @@ In this example, the sum of these counts is 3 + 0 + 1 + 1 + 1 = 6.
 For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
 '''
 
-count = 0
-
-for i in data:
-    d = [set(x) for x in i.split('\n')]
-    j = d[0]
-    for i in d:
-        j = j.intersection(set(i))
-    count += len(j)
- 
-print(count)
+print(sum([len(i) for i in [set.intersection(*j) for j in data]]))
