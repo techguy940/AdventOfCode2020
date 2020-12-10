@@ -1,3 +1,4 @@
+'''
 --- Day 10: Adapter Array ---
 Patched into the aircraft's data port, you discover weather forecasts of a massive tropical storm. Before you can figure out whether it will impact your vacation plans, however, your device suddenly turns off!
 
@@ -78,9 +79,9 @@ Here is a larger example:
 In this larger example, in a chain that uses all of the adapters, there are 22 differences of 1 jolt and 10 differences of 3 jolts.
 
 Find a chain that uses all of your adapters to connect the charging outlet to your device's built-in adapter and count the joltage differences between the charging outlet, the adapters, and your device. What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?
-
-
 '''
+
+
 with open("data.txt") as f:
     data = sorted([*map(int, f.readlines())])
 
@@ -152,7 +153,7 @@ What is the total number of distinct ways you can arrange the adapters to connec
 
 data.append(0)
 data.sort()
-data.append(max(data)+3)
+data.append(max(data) + 3)
 
 VISTIED = {}
 def part2(i):
