@@ -120,6 +120,13 @@ However, with so many bus IDs in your list, surely the actual earliest timestamp
 What is the earliest timestamp such that all of the listed bus IDs depart at offsets matching their positions in the list?
 '''
 
+from functools import reduce
+
+def _factors(buses):
+  new_buses = [(i, int(bus)) for i, bus in enumerate(buses) if bus != "x"]
+  factors = [(bus, (bus - i) % bus) for i, bus in new_buses]
+  return factors
+
 def mul(a, b):
     b0 = b
     x0, x1 = 0, 1
